@@ -1,13 +1,30 @@
 # k6 Performance Testing Suite
 
+[![Validate k6 Scripts](https://github.com/pkchat55/k6-performance-tests/actions/workflows/validate.yml/badge.svg)](https://github.com/pkchat55/k6-performance-tests/actions/workflows/validate.yml)
 [![k6](https://img.shields.io/badge/k6-Load%20Testing-7D64FF?logo=k6&logoColor=white)](https://k6.io/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Grafana](https://img.shields.io/badge/Reporting-Grafana%20Style-F46800?logo=grafana&logoColor=white)](https://grafana.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](#license)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 A production-style **k6 performance testing suite** covering the full spectrum of API load-testing patterns: HTTP verbs, authentication flows, request correlation, data-driven testing, and custom HTML reporting (Grafana-style and BlazeMeter-style aggregate reports).
 
 This repo is designed as both a **working test harness** and a **reference implementation** of k6 best practices — defensive response handling, reusable credential pools, and CI-friendly reporting.
+
+---
+
+## 📑 Table of Contents
+
+- [Highlights](#-highlights)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Reporting](#-reporting)
+- [Defensive Response Handling](#%EF%B8%8F-defensive-response-handling)
+- [Target API Notice](#%EF%B8%8F-target-api-notice)
+- [Tech Stack](#-tech-stack)
+- [Contributing](#-contributing)
+- [Connect](#-connect)
+- [License](#-license)
 
 ---
 
@@ -140,10 +157,27 @@ These scripts were authored against the public [`test-api.k6.io`](https://test-a
 
 ## 🧰 Tech Stack
 
-`k6` · `JavaScript (ES6+)` · `k6/http` · `k6/data` · `jslib.k6.io` (k6-utils, PapaParse) · `Node.js` (reporting) · `Chart.js` (timeline visualization)
+`k6` · `JavaScript (ES6+)` · `k6/http` · `k6/data` · `jslib.k6.io` (k6-utils, PapaParse) · `Node.js` (reporting) · `Chart.js` (timeline visualization) · `GitHub Actions` (CI validation)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on adding scripts, datasets, or reporting improvements, plus bug/feature issue templates under [`.github/ISSUE_TEMPLATE`](.github/ISSUE_TEMPLATE).
+
+---
+
+## 🔗 Connect
+
+Built as a reference implementation of k6 performance-testing patterns and reporting pipelines.
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pravin-chaturvedi-19444851/)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?logo=github&logoColor=white)](https://github.com/pkchat55)
+
+If this repo helped you, consider ⭐️ starring it and sharing it with your network.
 
 ---
 
 ## 📄 License
 
-MIT — feel free to use this suite as a template for your own performance testing projects.
+This project is licensed under the [MIT License](LICENSE) — feel free to use it as a template for your own performance testing projects.
