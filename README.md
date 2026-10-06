@@ -27,25 +27,37 @@ This repo is designed as both a **working test harness** and a **reference imple
 
 ## 📁 Project Structure
 
-| File | Purpose |
+```
+.
+├── tests/
+│   ├── http-methods/     # Full HTTP verb coverage & auth/token flows
+│   ├── data-driven/      # SharedArray-based tests using JSON/CSV datasets
+│   └── utils/            # Headers, correlation, parsing, randomization helpers
+├── data/                 # Reusable test credential datasets
+├── reports/              # Report post-processors & generated HTML reports
+├── README.md
+└── .gitignore
+```
+
+| Path | Purpose |
 |---|---|
-| `http-get.js` | Basic `GET` request + JSON assertion |
-| `http-post.js` / `http-post_coderefactor.js` | User registration + login (`POST`), token extraction |
-| `http-post-Auth.js` | Full authenticated flow: register → login → create resource |
-| `http-post_token_assignment.js` | End-to-end token lifecycle: register → login → authorized `GET`/`POST` → verification |
-| `http-put.js` | Authenticated resource update (`PUT`) |
-| `http-patch.js` | Authenticated partial update (`PATCH`) |
-| `http-delete.js` | Full CRUD lifecycle ending in resource deletion |
-| `accessingHeader.js` | Reading and asserting on response headers |
-| `corelation.js` | Request correlation — using data from one response in the next request |
-| `parsing-json.js` | JSON response parsing & field assertions |
-| `random-item.js` | Random selection from a dynamic response dataset |
-| `random-string.js` / `random-sleep.js` | Randomized test data & think-time simulation |
-| `external-json.js` / `external-json-initial.js` | Data-driven testing using `users.json` + `SharedArray` |
-| `external-csv.js` | Data-driven testing using `users.csv` + PapaParse |
-| `env-var.js` | Environment-variable driven base URL configuration |
-| `add-timeline.js` | Node.js post-processor that injects a response-time timeline chart into the HTML report |
-| `users.json` / `users.csv` | Reusable test credential datasets |
+| `tests/http-methods/http-get.js` | Basic `GET` request + JSON assertion |
+| `tests/http-methods/http-post.js` / `http-post_coderefactor.js` | User registration + login (`POST`), token extraction |
+| `tests/http-methods/http-post-Auth.js` | Full authenticated flow: register → login → create resource |
+| `tests/http-methods/http-post_token_assignment.js` | End-to-end token lifecycle: register → login → authorized `GET`/`POST` → verification |
+| `tests/http-methods/http-put.js` | Authenticated resource update (`PUT`) |
+| `tests/http-methods/http-patch.js` | Authenticated partial update (`PATCH`) |
+| `tests/http-methods/http-delete.js` | Full CRUD lifecycle ending in resource deletion |
+| `tests/utils/accessingHeader.js` | Reading and asserting on response headers |
+| `tests/utils/corelation.js` | Request correlation — using data from one response in the next request |
+| `tests/utils/parsing-json.js` | JSON response parsing & field assertions |
+| `tests/utils/random-item.js` | Random selection from a dynamic response dataset |
+| `tests/utils/random-string.js` / `random-sleep.js` | Randomized test data & think-time simulation |
+| `tests/utils/env-var.js` | Environment-variable driven base URL configuration |
+| `tests/data-driven/external-json.js` / `external-json-initial.js` | Data-driven testing using `data/users.json` + `SharedArray` |
+| `tests/data-driven/external-csv.js` | Data-driven testing using `data/users.csv` + PapaParse |
+| `reports/add-timeline.js` | Node.js post-processor that injects a response-time timeline chart into the HTML report |
+| `data/users.json` / `data/users.csv` | Reusable test credential datasets |
 
 ---
 
@@ -64,19 +76,19 @@ brew install k6
 ### Run a single test
 
 ```bash
-k6 run http-post_token_assignment.js
+k6 run tests/http-methods/http-post_token_assignment.js
 ```
 
 ### Run with custom VUs / duration
 
 ```bash
-k6 run --vus 5 --duration 30s random-string.js
+k6 run --vus 5 --duration 30s tests/utils/random-string.js
 ```
 
 ### Run with environment variables
 
 ```bash
-k6 run -e BASE_URL=https://your-api.example.com env-var.js
+k6 run -e BASE_URL=https://your-api.example.com tests/utils/env-var.js
 ```
 
 ---
@@ -88,8 +100,8 @@ k6 run -e BASE_URL=https://your-api.example.com env-var.js
 k6's native web dashboard renders real-time charts during the run and can export a full HTML report at the end:
 
 ```bash
-K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=grafana-report.html \
-  k6 run --vus 3 --duration 40s env-var.js
+K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=reports/grafana-report.html \
+  k6 run --vus 3 --duration 40s tests/utils/env-var.js
 ```
 
 ### BlazeMeter-style aggregate report with timeline
@@ -97,11 +109,11 @@ K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=grafana-report.html \
 Generates an aggregate summary table (Avg, Median, p90/p95/p99, Error %, Throughput, KB/sec) via `handleSummary`, then enriches it with a response-time timeline chart sourced from the raw JSON output:
 
 ```bash
-k6 run --vus 3 --duration 15s --out json=results.json env-var.js
-node add-timeline.js results.json blazemeter-report.html
+k6 run --vus 3 --duration 15s --out json=results.json tests/utils/env-var.js
+node reports/add-timeline.js results.json reports/blazemeter-report.html
 ```
 
-Open `blazemeter-report.html` in a browser to view the final report.
+Open `reports/blazemeter-report.html` in a browser to view the final report.
 
 ---
 

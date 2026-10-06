@@ -4,7 +4,7 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 
 const userCredentials = new SharedArray('users with credentials', function () {
-    return JSON.parse(open('./users.json')).users;
+    return JSON.parse(open('../../data/users.json')).users;
 });
 
 export default function () {
